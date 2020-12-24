@@ -1,1 +1,7 @@
-## Simple example of authorization using ts, node.js, mongodb and jswebtoken
+### Simple example of authorization with jsonwebtoken
+	
+Used technologies:
+
+ - TypeScript
+ - Node.js(Express)
+ - MongoDB(mongoose)
