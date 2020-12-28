@@ -1,9 +1,10 @@
-const express = require('express');
-const config = require('config');
-const mongoose = require('mongoose');
 import * as bodyParser from 'body-parser';
 import { Application } from 'express';
 import { router as authRouter } from './routes/authRouter';
+
+const express = require('express');
+const config = require('config');
+const mongoose = require('mongoose');
 
 const app: Application = express();
 const PORT = config.get('port');

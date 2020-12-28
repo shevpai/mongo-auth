@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authController as controller } from '../controllers/authController';
-import { roleMiddleware } from '../controllers/roleMiddleware';
+import { roleMiddleware } from '../middleware/roleMiddleware';
 import { authMiddleware } from '../middleware/authMiddleware';
 
 const { check } = require('express-validator');

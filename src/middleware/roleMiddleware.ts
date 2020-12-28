@@ -3,10 +3,6 @@ import { NextFunction, Request, Response } from 'express';
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
-// interface extReq extends Request {
-//   user?: object;
-// }
-
 export function roleMiddleware(roles: string[]) {
   return function (req: Request, res: Response, next: NextFunction) {
     if (req.method === 'OPTIONS') {
