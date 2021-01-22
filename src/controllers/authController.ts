@@ -34,8 +34,8 @@ export class authController {
           .json({ message: 'User with this email already exists' });
       }
 
-      const hashedPassword = bcrypt.hashSync(password, 7);
-      const userRole = await Role.findOne({ value: 'ADMIN' });
+      const hashedPassword = bcrypt.hashSync(password, 12);
+      const userRole = await Role.findOne({ value: 'USER' });
       const user = new User({
         name,
         password: hashedPassword,
@@ -43,10 +43,20 @@ export class authController {
         role: [userRole!.value],
       });
       await user.save();
-      res.status(201).json(user);
+
+      const token = generateToken(user._id, user.role);
+      res.status(201).json({
+        status: 'success',
+        token,
+        data: {
+          user,
+        },
+      });
     } catch (e) {
       console.error(e.message);
-      res.status(400).json({ message: 'Registration error', errorData: e });
+      res
+        .status(400)
+        .json({ status: 'fail', message: 'Registration error', errorData: e });
     }
   }
 
@@ -72,20 +82,33 @@ export class authController {
       }
 
       const token = generateToken(user._id, user.role);
-      res.status(200).json({ token });
+      res.status(200).json({
+        status: 'success',
+        token,
+        data: {
+          user,
+        },
+      });
     } catch (e) {
       console.error(e.message);
-      res.status(400).json({ message: 'Login error', errorData: e });
+      res
+        .status(400)
+        .json({ status: 'fail', message: 'Login error', errorData: e });
     }
   }
 
   static async getUser(req: Request, res: Response) {
     try {
       const users = await User.find();
-      res.status(200).json(users);
+      res.status(200).json({
+        status: 'success',
+        data: {
+          users,
+        },
+      });
     } catch (e) {
       console.error(e.message);
-      res.status(400).json({ message: e.message });
+      res.status(400).json({ status: 'fail', message: e.message });
     }
   }
 }
